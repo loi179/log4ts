@@ -51,15 +51,14 @@ export default class Logger {
             message += ' ' + stringify(object, deep || 1);
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
-            for (var i in Logger.config.getAppenders()) {
-                var appender = Logger.config.getAppenders()[i];
+            Logger.config.getAppenders().forEach(appender => {
                 appender.append({
                     message: message,
                     time: new Date(),
                     tag: this.tag,
                     level: level
                 });
-            }
+            })
         }
     }
 

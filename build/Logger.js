@@ -42,19 +42,19 @@ var Logger = (function () {
         }
     };
     Logger.prototype.doLog = function (level, message, object, deep) {
+        var _this = this;
         if (typeof object !== "undefined") {
             message += ' ' + Utils_1.stringify(object, deep || 1);
         }
         if (level >= Logger.config.getLevel() && Logger.config.hasTag(this.tag)) {
-            for (var i in Logger.config.getAppenders()) {
-                var appender = Logger.config.getAppenders()[i];
+            Logger.config.getAppenders().forEach(function (appender) {
                 appender.append({
                     message: message,
                     time: new Date(),
-                    tag: this.tag,
+                    tag: _this.tag,
                     level: level
                 });
-            }
+            });
         }
     };
     Logger.loggers = {};
